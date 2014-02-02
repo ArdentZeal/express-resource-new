@@ -125,8 +125,9 @@ $(Resource.prototype, {
     
     orderedActions.forEach(function(action) {
       if(!(action in self.actions)) return;
-      var path = self.path(action),
-          callback = self.actions[action],
+      var path = path.join('/api/v1', self.path(action));
+
+      var callback = self.actions[action],
           method, before;
       
       switch(action) {
