@@ -68,7 +68,9 @@ function httpMethod(self, method, base) {
       }
     }
     
-    var path = self.path(base), before;
+    var path = '/api/v1';
+      path += self.path(base);
+    var before;
     if(!/\/$/.test(path))
           path += '/';
     path += action + ".:format?";
