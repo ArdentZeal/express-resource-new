@@ -76,7 +76,7 @@ function httpMethod(self, method, base) {
     path += action + ".:format?";
       
     if(self.before && action in self.before) {
-      before = self.before[action];
+      before = [].concat(self.before[action]);
     }
     
     self._map(method, path, before, callback)
@@ -116,13 +116,21 @@ var Resource = module.exports = function Resource(app, name, options) {
 $(Resource.prototype, {
   
   /**
-   * Configure the default actions.
+   * Initialize the default actions.
    * 
    * @param {Object} actions
    */
   
   _init: function(actions) {
     this.actions = actions;
+  },
+
+  /**
+   * Configure the default actions.
+   * 
+   * @param {Object} actions
+   */
+   _defaultMapping: function() {
     var self = this;
     
     orderedActions.forEach(function(action) {
@@ -370,6 +378,8 @@ var methods = {
     if('function' == typeof callback) {
       resource._nest(callback);
     }
+
+    resource._defaultMapping();
     
     return resource;
   }
